@@ -25,5 +25,6 @@ class UserTest extends TestCase
             'email' => 'darry@gmail.com'
 
         ]);
+        $this->assertTrue($user->name != $user2->name);
     }
 }
