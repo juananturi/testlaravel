@@ -2,29 +2,57 @@
 
 namespace Tests\Unit;
 
+use App\Models\User;
 use Tests\TestCase;
-use app\Models\User;
 
 class UserTest extends TestCase
 {
-
-    public function test_login_from()
+    /**
+     * A basic unit test example.
+     *
+     * @return void
+     */
+    public function test_example()
     {
-        $response = $this->get('/login');
+        $this->assertTrue(true);
+    }
+
+    //Check if login page exists
+    public function test_login_form()
+    {
+        $response = $this->get('/');
+
         $response->assertStatus(200);
     }
+
+    //Check if user exists in database
     public function test_user_duplication()
     {
-        $user = User::make([
-            'name'=>'John',
-            'email' => 'johno@gmail.com'
-
+        $user1 = User::make([
+            'name' => 'John Doe',
+            'email' => 'johndoe@gmail.com'
         ]);
+
         $user2 = User::make([
-            'name'=>'darry',
-            'email' => 'darry@gmail.com'
-
+            'name' => 'Mary Jane',
+            'email' => 'maryjane@gmail.com'
         ]);
-        $this->assertTrue($user->name != $user2->name);
+
+        $this->assertTrue($user1->name != $user2->name);
     }
+
+    //Test if a user can be deleted (make sure that you add the middleware)
+    public function test_delete_user()
+    {
+        $user = User::factory()->count(1)->make();
+
+        $user = User::first();
+
+        if($user) {
+            $user->delete();
+        }
+
+        $this->assertTrue(true);
+    }
+
 }
